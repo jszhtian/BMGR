@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BMgr"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="BMgr" Height="720" Width="1280">
+    <Viewbox Stretch=" fill">
+        <Grid>
+            <Grid HorizontalAlignment="Left" Height="71" Margin="10,10,0,0" VerticalAlignment="Top" Width="772">
+                <Button x:Name="DBInit" Content="Init" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="75" Click="DBInit_Click"/>
+                <Button x:Name="DBDel" Content="Delete" HorizontalAlignment="Left" Margin="107,40,0,0" VerticalAlignment="Top" Width="75" Click="DBDel_Click"/>
+                <Label Content="DB Operation&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="92"/>
+                <Label Content="Record Operation" HorizontalAlignment="Left" Margin="231,10,0,0" VerticalAlignment="Top"/>
+                <GridSplitter HorizontalAlignment="Left" Height="61" Margin="193,10,0,0" VerticalAlignment="Top" Width="5"/>
+                <Button x:Name="RecNew" Content="New" HorizontalAlignment="Left" Margin="231,40,0,0" VerticalAlignment="Top" Width="75" Click="RecNew_Click"/>
+                <Button x:Name="RecDel" Content="Del" HorizontalAlignment="Left" Margin="328,40,0,0" VerticalAlignment="Top" Width="75" Click="RecDel_Click"/>
+                <Button x:Name="RecUpd" Content="Update" HorizontalAlignment="Left" Margin="426,40,0,0" VerticalAlignment="Top" Width="75"/>
+                <Button x:Name="RecRef" Content="Refresh" HorizontalAlignment="Left" Margin="519,40,0,0" VerticalAlignment="Top" Width="75" Click="RecRef_Click"/>
+                <Button Content="Find" HorizontalAlignment="Left" Margin="619,40,0,0" VerticalAlignment="Top" Width="75"/>
+            </Grid>
+            <Grid HorizontalAlignment="Left" Height="328" Margin="10,81,0,0" VerticalAlignment="Top" Width="772">
+                <Label Content="Tag" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.65,0.317"/>
+                <ListBox x:Name="TagList" HorizontalAlignment="Left" Height="136" Margin="10,30,0,0" VerticalAlignment="Top" Width="172" SelectionMode="Extended"/>
+                <Button x:Name="AddTag" Content="Add Tag" HorizontalAlignment="Left" Margin="208,48,0,0" VerticalAlignment="Top" Width="75" Click="AddTag_Click"/>
+                <Button x:Name="DelTag" Content="Del Tag" HorizontalAlignment="Left" Margin="208,87,0,0" VerticalAlignment="Top" Width="75" Click="DelTag_Click"/>
+                <Label Content="Name" HorizontalAlignment="Left" Margin="374,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.311,0.817"/>
+                <Label Content="Author" HorizontalAlignment="Left" Margin="373,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.138,0.75"/>
+                <Label Content="Page" HorizontalAlignment="Left" Margin="375,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.075,-0.593"/>
+                <Label Content="List" HorizontalAlignment="Left" Margin="12,165,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" Margin="433,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
+                <TextBox x:Name="AuthBox" HorizontalAlignment="Left" Height="23" Margin="433,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
+                <TextBox x:Name="PageBox" HorizontalAlignment="Left" Height="23" Margin="433,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" RenderTransformOrigin="-0.198,-1.157"/>
+                <TextBox x:Name="PathBox" HorizontalAlignment="Left" Height="23" Margin="433,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
+                <TextBox x:Name="TagBox" HorizontalAlignment="Left" Height="23" Margin="225,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <Label Content="Tag" HorizontalAlignment="Left" Margin="192,125,0,0" VerticalAlignment="Top"/>
+                <ListView x:Name="RecList" HorizontalAlignment="Left" Height="123" Margin="10,195,0,0" VerticalAlignment="Top" Width="752" SelectionMode="Single" SelectionChanged="RecList_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="ID" Width="40" DisplayMemberBinding="{Binding id}"/>
+                            <GridViewColumn Header="Author" Width="160" DisplayMemberBinding="{Binding author}"/>
+                            <GridViewColumn Header="Name" Width="320" DisplayMemberBinding="{Binding name}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <GridSplitter HorizontalAlignment="Left" Height="195" Margin="356,0,0,0" VerticalAlignment="Top" Width="5"/>
+                <Label Content="Path" HorizontalAlignment="Left" Margin="374,101,0,0" VerticalAlignment="Top"/>
+                
+            </Grid>
+        </Grid>
+    </Viewbox>
 </Window>
