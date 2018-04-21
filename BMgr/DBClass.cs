@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data;
+using System.IO;
 
 namespace BMgr
 {
@@ -22,6 +23,12 @@ namespace BMgr
         private static SQLiteConnection DBconn;
         public DBClass()
         {
+            string fileName = "rec.db";
+            if (!File.Exists(fileName))
+            {
+                System.Windows.MessageBox.Show("Error: Create Database before operation!" , "Error Info");
+                return;
+            }
             if (DBconn == null)
             {
                 DBconn = new SQLiteConnection("Data Source=rec.db;Version=3;Compress=True;");
@@ -52,6 +59,11 @@ namespace BMgr
         }
         public List<DataStruct> QueryRecord(bool LoadAll=false)
         {
+            if (DBconn == null)
+            {
+                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                return null;
+            }
             SQLiteCommand cmd;
             SQLiteDataReader reader;
             List<DataStruct> list = new List<DataStruct>();
@@ -89,6 +101,11 @@ namespace BMgr
         }
         public bool InsertRecord(string Name,string Author,string TagString,string page,string path)
         {
+            if (DBconn == null)
+            {
+                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                return false;
+            }
             int pagenum = 0;
             if(int.TryParse(page,out pagenum)!=true) return false;
             SQLiteCommand cmd;
@@ -117,6 +134,11 @@ namespace BMgr
         }
         public bool DeleteRecord(Int64 id)
         {
+            if (DBconn == null)
+            {
+                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                return false;
+            }
             SQLiteCommand cmd;
             cmd = DBconn.CreateCommand();
             cmd.CommandText = "DELETE FROM Record WHERE rowid=@id;";
@@ -135,6 +157,11 @@ namespace BMgr
         }
         public bool UpdateRecord(Int64 id,string Name, string Author, string TagString, string page, string path)
         {
+            if (DBconn == null)
+            {
+                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                return false;
+            }
             int pagenum = 0;
             if (int.TryParse(page, out pagenum) != true) return false;
             SQLiteCommand cmd;
@@ -165,6 +192,11 @@ namespace BMgr
         }
         public List<DataStruct> QueryRecordByName(string name)
         {
+            if (DBconn == null)
+            {
+                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                return null;
+            }
             SQLiteCommand cmd;
             SQLiteDataReader reader;
             List<DataStruct> list = new List<DataStruct>();
@@ -196,6 +228,11 @@ namespace BMgr
         }
         public List<DataStruct> QueryRecordByAuthor(string author)
         {
+            if (DBconn == null)
+            {
+                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                return null;
+            }
             SQLiteCommand cmd;
             SQLiteDataReader reader;
             List<DataStruct> list = new List<DataStruct>();
