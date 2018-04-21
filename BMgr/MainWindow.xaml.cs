@@ -296,9 +296,15 @@ namespace BMgr
                         addTagFunc(val);
                     }
                     MessageBox.Show("Operation Successfully Completed", "Info");
-                    string imgpath = System.IO.Path.GetDirectoryName(PathBox.Text) + "\\" + CoverBox.Text;
-                    CoverWindow cover = new CoverWindow(imgpath);
-                    cover.Show();
+                    if (!string.IsNullOrWhiteSpace(CoverBox.Text))
+                    {
+                        string imgpath = System.IO.Path.GetDirectoryName(PathBox.Text) + "\\" + CoverBox.Text;
+                        CoverWindow cover = new CoverWindow(imgpath);
+                        cover.Owner = Application.Current.MainWindow;
+                        cover.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                        cover.Show();
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
