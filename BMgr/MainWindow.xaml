@@ -33,6 +33,7 @@
                 <TextBox x:Name="AuthBox" HorizontalAlignment="Left" Height="23" Margin="433,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
                 <TextBox x:Name="PageBox" HorizontalAlignment="Left" Height="23" Margin="433,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="pagebox_inputfilter" />
                 <TextBox x:Name="PathBox" HorizontalAlignment="Left" Height="23" Margin="433,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" InputMethod.IsInputMethodEnabled="False"/>
+                <TextBox x:Name="CoverBox" HorizontalAlignment="Left" Height="23" Margin="433,133,0,0" Width="329" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <TextBox x:Name="TagBox" HorizontalAlignment="Left" Height="23" Margin="225,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                 <Label Content="Tag" HorizontalAlignment="Left" Margin="192,125,0,0" VerticalAlignment="Top"/>
                 <ListView x:Name="RecList" HorizontalAlignment="Left" Height="123" Margin="10,195,0,0" VerticalAlignment="Top" Width="752" SelectionMode="Single" SelectionChanged="RecList_SelectionChanged">
@@ -45,8 +46,12 @@
                     </ListView.View>
                 </ListView>
                 <GridSplitter HorizontalAlignment="Left" Height="195" Margin="356,0,0,0" VerticalAlignment="Top" Width="5"/>
-                <Label Content="Path" HorizontalAlignment="Left" Margin="374,101,0,0" VerticalAlignment="Top"/>
-                
+                <Label Content="Path" HorizontalAlignment="Left" Margin="374,105,0,0" VerticalAlignment="Top"/>
+                <Label Content="Cover" HorizontalAlignment="Left" Margin="375,133,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="Load_Meta" Content="Load Meta" HorizontalAlignment="Left" Margin="531,165,0,0" VerticalAlignment="Top" Width="75" Click="Load_Meta_Click"/>
+                <Button x:Name="Save_Meta" Content="Save Meta" HorizontalAlignment="Left" Margin="433,165,0,0" VerticalAlignment="Top" Width="75" Click="Save_Meta_Click"/>
+
+
             </Grid>
         </Grid>
     </Viewbox>

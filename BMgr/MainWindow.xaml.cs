@@ -127,6 +127,7 @@ namespace BMgr
                 AuthBox.Text = eventdata.author;
                 PageBox.Text = eventdata.page.ToString();
                 PathBox.Text = eventdata.path;
+                CoverBox.Text = "";
                 string[] tags = TagsClass.GetTagListFromString(eventdata.tagstring);
                 TagList.Items.Clear();
                 foreach (string val in tags)
@@ -266,6 +267,81 @@ namespace BMgr
                 {
                     MessageBox.Show("search condition is empty", "Info");
                 }
+            }
+        }
+
+        private void Load_Meta_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(PathBox.Text))
+            {
+                if (PathBox.Text[PathBox.Text.Length-1] != '\\') PathBox.Text += "\\";
+                string xmlPath = System.IO.Path.GetDirectoryName(PathBox.Text) + "\\meta.xml";
+                if (!File.Exists(xmlPath))
+                {
+                    MessageBox.Show("No meta file found", "Info");
+                    return;
+                }
+                string xmlString = File.ReadAllText(xmlPath, Encoding.Unicode);
+                try
+                {
+                    MetaClass GetDeserializedObj = MetaClass.XmlDeserialize<MetaClass>(xmlString);
+                    AuthBox.Text = GetDeserializedObj.author;
+                    CoverBox.Text = GetDeserializedObj.cover;
+                    NameBox.Text = GetDeserializedObj.name;
+                    PageBox.Text = GetDeserializedObj.page.ToString();
+                    string[] tags = TagsClass.GetTagListFromString(GetDeserializedObj.tagstring);
+                    TagList.Items.Clear();
+                    foreach (string val in tags)
+                    {
+                        addTagFunc(val);
+                    }
+                    MessageBox.Show("Operation Successfully Completed", "Info");
+                    string imgpath = System.IO.Path.GetDirectoryName(PathBox.Text) + "\\" + CoverBox.Text;
+                    CoverWindow cover = new CoverWindow(imgpath);
+                    cover.Show();
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Error:" + ex.ToString(), "Error Info");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Path is empty", "Info");
+            }
+        }
+
+        private void Save_Meta_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(PathBox.Text))
+            {
+                if(PathBox.Text[PathBox.Text.Length-1]!= '\\') PathBox.Text+="\\";
+                string xmlPath = System.IO.Path.GetDirectoryName(PathBox.Text) + "\\meta.xml";
+                MetaClass meta = new MetaClass();
+                meta.author = AuthBox.Text;
+                meta.cover = CoverBox.Text;
+                meta.name = NameBox.Text;
+                meta.page = int.Parse(PageBox.Text);
+                List<string> Tags = new List<string>();
+                foreach (var item in TagList.Items)
+                {
+                    Tags.Add(item.ToString());
+                }
+                string[] TagsArray = new string[Tags.Count];
+                Tags.CopyTo(TagsArray);
+                meta.tagstring = TagsClass.GetTagStringFromList(TagsArray);
+                var xmlString=MetaClass.XmlSerialize(meta);
+                if (File.Exists(xmlPath))
+                {
+                    File.Delete(xmlPath);
+                }
+                File.WriteAllText(xmlPath, xmlString,Encoding.Unicode);
+                MessageBox.Show("Operation Successfully Completed", "Info");
+            }
+            else
+            {
+                MessageBox.Show("Path is empty", "Info");
             }
         }
     }
