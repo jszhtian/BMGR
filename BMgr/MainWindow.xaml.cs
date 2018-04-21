@@ -40,6 +40,8 @@ namespace BMgr
         private void DBDel_Click(object sender, RoutedEventArgs e)
         {
             var result=MessageBox.Show("Do you want to delete the DataBase?", "Warning", MessageBoxButton.YesNo);
+            DBClass dbo = new DBClass();
+            dbo.ForceClose();
             if (result == MessageBoxResult.Yes)
             {
                 string fileName = "rec.db";

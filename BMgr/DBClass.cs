@@ -45,6 +45,11 @@ namespace BMgr
             }
             return true;
         }
+        public void ForceClose()
+        {
+            if(DBconn.State== ConnectionState.Open) DBconn.Close();
+            DBconn = null;
+        }
         public List<DataStruct> QueryRecord()
         {
             SQLiteCommand cmd;
