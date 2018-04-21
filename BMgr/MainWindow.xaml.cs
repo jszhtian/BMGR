@@ -234,7 +234,7 @@ namespace BMgr
                 if (!string.IsNullOrWhiteSpace(NameBox.Text))
                 {
                     DBClass dbclass = new DBClass();
-                    bufdata = dbclass.QueryRecordByAuthor(NameBox.Text);
+                    bufdata = dbclass.QueryRecordByName(NameBox.Text);
                     RecList.ItemsSource = bufdata;
                 }
                 else
