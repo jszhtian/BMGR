@@ -50,13 +50,21 @@ namespace BMgr
             if(DBconn.State== ConnectionState.Open) DBconn.Close();
             DBconn = null;
         }
-        public List<DataStruct> QueryRecord()
+        public List<DataStruct> QueryRecord(bool LoadAll=false)
         {
             SQLiteCommand cmd;
             SQLiteDataReader reader;
             List<DataStruct> list = new List<DataStruct>();
             cmd = DBconn.CreateCommand();
-            cmd.CommandText = "SELECT rowid,name,author,tag,page,path FROM Record LIMIT 500;";
+            if (!LoadAll)
+            {
+                cmd.CommandText = "SELECT rowid,name,author,tag,page,path FROM Record LIMIT 500;";
+            }
+            else
+            {
+                cmd.CommandText = "SELECT rowid,name,author,tag,page,path FROM Record;";
+            }
+            
             try
             {
                 reader = cmd.ExecuteReader();
@@ -124,6 +132,98 @@ namespace BMgr
                 return false;
             }
             return true;
+        }
+        public bool UpdateRecord(Int64 id,string Name, string Author, string TagString, string page, string path)
+        {
+            int pagenum = 0;
+            if (int.TryParse(page, out pagenum) != true) return false;
+            SQLiteCommand cmd;
+            cmd = DBconn.CreateCommand();
+            cmd.CommandText = "update Record set name=@Name,author=@Author,tag=@Tag,page=@Page,path=@Path where rowid=@id;";
+            cmd.Parameters.Add("@Name", DbType.String);
+            cmd.Parameters.Add("@Author", DbType.String);
+            cmd.Parameters.Add("@Tag", DbType.String);
+            cmd.Parameters.Add("@Page", DbType.Int64);
+            cmd.Parameters.Add("@Path", DbType.String);
+            cmd.Parameters.Add("@id", DbType.Int64);
+            cmd.Parameters[0].Value = Name;
+            cmd.Parameters[1].Value = Author;
+            cmd.Parameters[2].Value = TagString;
+            cmd.Parameters[3].Value = pagenum;
+            cmd.Parameters[4].Value = path;
+            cmd.Parameters[5].Value = id;
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Error:" + ex.ToString(), "Error Info");
+                return false;
+            }
+            return true;
+        }
+        public List<DataStruct> QueryRecordByName(string name)
+        {
+            SQLiteCommand cmd;
+            SQLiteDataReader reader;
+            List<DataStruct> list = new List<DataStruct>();
+            cmd = DBconn.CreateCommand();
+            cmd.CommandText = "SELECT rowid,name,author,tag,page,path FROM Record WHERE name LIKE @name;";
+            cmd.Parameters.Add("@name", DbType.String);
+            cmd.Parameters[0].Value = "%"+name+"%";
+            try
+            {
+                reader = cmd.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Error:" + ex.ToString(), "Error Info");
+                return null;
+            }
+            while (reader.Read())
+            {
+                DataStruct data = new DataStruct();
+                data.name = (string)reader["name"];
+                data.id = (Int64)reader["rowid"];
+                data.author = (string)reader["author"];
+                data.tagstring = (string)reader["tag"];
+                data.path = (string)reader["path"];
+                data.page = (Int64)reader["page"];
+                list.Add(data);
+            }
+            return list;
+        }
+        public List<DataStruct> QueryRecordByAuthor(string author)
+        {
+            SQLiteCommand cmd;
+            SQLiteDataReader reader;
+            List<DataStruct> list = new List<DataStruct>();
+            cmd = DBconn.CreateCommand();
+            cmd.CommandText = "SELECT rowid,name,author,tag,page,path FROM Record WHERE author LIKE @author;";
+            cmd.Parameters.Add("@author", DbType.String);
+            cmd.Parameters[0].Value = "%"+author+"%";
+            try
+            {
+                reader = cmd.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Error:" + ex.ToString(), "Error Info");
+                return null;
+            }
+            while (reader.Read())
+            {
+                DataStruct data = new DataStruct();
+                data.name = (string)reader["name"];
+                data.id = (Int64)reader["rowid"];
+                data.author = (string)reader["author"];
+                data.tagstring = (string)reader["tag"];
+                data.path = (string)reader["path"];
+                data.page = (Int64)reader["page"];
+                list.Add(data);
+            }
+            return list;
         }
     }
 }

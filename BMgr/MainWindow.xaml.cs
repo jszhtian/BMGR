@@ -147,7 +147,7 @@ namespace BMgr
             {
                 Int64 rowid = eventdata.id;
                 DBClass dbclass = new DBClass();
-                for (int i = 0; i < bufdata.Count; i++)
+                for (int i = bufdata.Count - 1; i >= 0; i--)
                 {
                     if (bufdata[i].id == rowid)
                         bufdata.Remove(bufdata[i]);
@@ -155,6 +155,117 @@ namespace BMgr
                 UpdateViewSource();
                 if(dbclass.DeleteRecord(rowid)) MessageBox.Show("Operation Successfully Completed", "Info");
                 
+            }
+        }
+
+        private void RecUpd_Click(object sender, RoutedEventArgs e)
+        {
+            DataStruct eventdata = RecList.SelectedItem as DataStruct;
+            if (eventdata != null && eventdata is DataStruct)
+            {
+
+                Int64 rowid = eventdata.id;
+                List<string> Tags = new List<string>();
+                if (TagList.Items.Count > 0)
+                {
+
+                    foreach (var item in TagList.Items)
+                    {
+                        Tags.Add(item.ToString());
+                    }
+                }
+                string[] TagsArray = new string[Tags.Count];
+                Tags.CopyTo(TagsArray);
+                string TagString = TagsClass.GetTagStringFromList(TagsArray);
+                DBClass dbclass = new DBClass();
+                if(dbclass.UpdateRecord(rowid, NameBox.Text, AuthBox.Text, TagString, PageBox.Text, PathBox.Text)) MessageBox.Show("Operation Successfully Completed", "Info");
+                for (int i = 0; i < bufdata.Count; i++)
+                {
+                    if (bufdata[i].id == rowid)
+                    {
+                        bufdata[i].author = AuthBox.Text;
+                        bufdata[i].name = NameBox.Text;
+                        bufdata[i].page = int.Parse(PageBox.Text);
+                        bufdata[i].path = PathBox.Text;
+                        bufdata[i].tagstring = TagString;
+                    }
+                        
+                }
+                UpdateViewSource();
+            }
+        }
+
+        private void pagebox_inputfilter(object sender, TextCompositionEventArgs e)
+        {
+            foreach (var ch in e.Text)
+            {
+                if (!(Char.IsDigit(ch)) )
+                    {
+                    e.Handled = true;
+                    break;
+                    }
+            }
+        }
+
+        private void RecFind_Click(object sender, RoutedEventArgs e)
+        {
+            FindWindow wnd = new FindWindow();
+            wnd.Owner= Application.Current.MainWindow;
+            wnd.WindowStartupLocation= WindowStartupLocation.CenterOwner;
+            wnd.ShowDialog();
+            FindWindow.SearchMode result = FindWindow.result;
+            if (result== FindWindow.SearchMode.cancelFind) MessageBox.Show("CANCEL Search", "Info");
+            if (result == FindWindow.SearchMode.byAuthor)
+            {
+                if (!string.IsNullOrWhiteSpace(AuthBox.Text))
+                {
+                    DBClass dbclass = new DBClass();
+                    bufdata = dbclass.QueryRecordByAuthor(AuthBox.Text);
+                    RecList.ItemsSource = bufdata;
+                }
+                else
+                {
+                    MessageBox.Show("search condition is empty", "Info");
+                }
+                
+            }
+            if (result == FindWindow.SearchMode.byName)
+            {
+                if (!string.IsNullOrWhiteSpace(NameBox.Text))
+                {
+                    DBClass dbclass = new DBClass();
+                    bufdata = dbclass.QueryRecordByAuthor(NameBox.Text);
+                    RecList.ItemsSource = bufdata;
+                }
+                else
+                {
+                    MessageBox.Show("search condition is empty", "Info");
+                }
+                
+            }
+            if (result == FindWindow.SearchMode.byTags)
+            {
+                DBClass dbclass = new DBClass();
+                bufdata = dbclass.QueryRecord(true);
+                if (TagList.Items.Count > 0)
+                {
+                    List<string> Tags = new List<string>();
+                    foreach (var item in TagList.Items)
+                    {
+                        Tags.Add(item.ToString());
+                    }
+                    string[] TagsArray = new string[Tags.Count];
+                    Tags.CopyTo(TagsArray);
+                    for (int i = bufdata.Count-1; i >=0; i--)
+                    {
+                        if (!TagsClass.IsContainAllTags(TagsClass.GetTagListFromString(bufdata[i].tagstring), TagsArray)) bufdata.Remove(bufdata[i]);
+                    }
+                    RecList.ItemsSource = bufdata;
+                }
+                else
+                {
+                    MessageBox.Show("search condition is empty", "Info");
+                }
             }
         }
     }

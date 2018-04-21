@@ -16,9 +16,9 @@
                 <GridSplitter HorizontalAlignment="Left" Height="61" Margin="193,10,0,0" VerticalAlignment="Top" Width="5"/>
                 <Button x:Name="RecNew" Content="New" HorizontalAlignment="Left" Margin="231,40,0,0" VerticalAlignment="Top" Width="75" Click="RecNew_Click"/>
                 <Button x:Name="RecDel" Content="Del" HorizontalAlignment="Left" Margin="328,40,0,0" VerticalAlignment="Top" Width="75" Click="RecDel_Click"/>
-                <Button x:Name="RecUpd" Content="Update" HorizontalAlignment="Left" Margin="426,40,0,0" VerticalAlignment="Top" Width="75"/>
+                <Button x:Name="RecUpd" Content="Update" HorizontalAlignment="Left" Margin="426,40,0,0" VerticalAlignment="Top" Width="75" Click="RecUpd_Click"/>
                 <Button x:Name="RecRef" Content="Refresh" HorizontalAlignment="Left" Margin="519,40,0,0" VerticalAlignment="Top" Width="75" Click="RecRef_Click"/>
-                <Button Content="Find" HorizontalAlignment="Left" Margin="619,40,0,0" VerticalAlignment="Top" Width="75"/>
+                <Button x:Name="RecFind" Content="Find" HorizontalAlignment="Left" Margin="619,40,0,0" VerticalAlignment="Top" Width="75" Click="RecFind_Click"/>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="328" Margin="10,81,0,0" VerticalAlignment="Top" Width="772">
                 <Label Content="Tag" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.65,0.317"/>
@@ -31,8 +31,8 @@
                 <Label Content="List" HorizontalAlignment="Left" Margin="12,165,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" Margin="433,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
                 <TextBox x:Name="AuthBox" HorizontalAlignment="Left" Height="23" Margin="433,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
-                <TextBox x:Name="PageBox" HorizontalAlignment="Left" Height="23" Margin="433,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" RenderTransformOrigin="-0.198,-1.157"/>
-                <TextBox x:Name="PathBox" HorizontalAlignment="Left" Height="23" Margin="433,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
+                <TextBox x:Name="PageBox" HorizontalAlignment="Left" Height="23" Margin="433,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="pagebox_inputfilter" />
+                <TextBox x:Name="PathBox" HorizontalAlignment="Left" Height="23" Margin="433,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" InputMethod.IsInputMethodEnabled="False"/>
                 <TextBox x:Name="TagBox" HorizontalAlignment="Left" Height="23" Margin="225,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                 <Label Content="Tag" HorizontalAlignment="Left" Margin="192,125,0,0" VerticalAlignment="Top"/>
                 <ListView x:Name="RecList" HorizontalAlignment="Left" Height="123" Margin="10,195,0,0" VerticalAlignment="Top" Width="752" SelectionMode="Single" SelectionChanged="RecList_SelectionChanged">
