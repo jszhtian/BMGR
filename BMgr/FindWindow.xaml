@@ -10,11 +10,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <RadioButton x:Name="byname" Content="Search by name" HorizontalAlignment="Left" Margin="19,25,0,0" VerticalAlignment="Top" FontSize="24" IsChecked="True"/>
-        <RadioButton x:Name="byauthor" Content="Search by author" HorizontalAlignment="Left" Margin="19,75,0,0" VerticalAlignment="Top" FontSize="24"/>
-        <RadioButton x:Name="bytag" Content="Search by tag(Maybe slow!)" HorizontalAlignment="Left" Margin="19,125,0,0" VerticalAlignment="Top" FontSize="24"/>
-        <Button x:Name="Run_button" Content="Run" HorizontalAlignment="Left" Margin="219,218,0,0" VerticalAlignment="Top" Width="104" Height="26" Click="Run_button_Click"/>
-        <Button x:Name="Cancel_button" Content="Cancel" HorizontalAlignment="Left" Margin="358,218,0,0" VerticalAlignment="Top" Width="103" Height="26" Click="Cancel_button_Click"/>
+        <RadioButton x:Name="byname" Content="按作品名搜索" HorizontalAlignment="Left" Margin="19,25,0,0" VerticalAlignment="Top" FontSize="24" IsChecked="True"/>
+        <RadioButton x:Name="byauthor" Content="按作者搜索" HorizontalAlignment="Left" Margin="19,75,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <RadioButton x:Name="bytag" Content="按标签搜索(速度慢!)" HorizontalAlignment="Left" Margin="19,125,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Button x:Name="Run_button" Content="执行" HorizontalAlignment="Left" Margin="219,218,0,0" VerticalAlignment="Top" Width="104" Height="26" Click="Run_button_Click"/>
+        <Button x:Name="Cancel_button" Content="取消" HorizontalAlignment="Left" Margin="358,218,0,0" VerticalAlignment="Top" Width="103" Height="26" Click="Cancel_button_Click"/>
 
     </Grid>
 </Window>
