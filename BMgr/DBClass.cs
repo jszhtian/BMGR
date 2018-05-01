@@ -24,15 +24,15 @@ namespace BMgr
         public DBClass()
         {
             string fileName = "rec.db";
-            if (!File.Exists(fileName))
-            {
-                System.Windows.MessageBox.Show("Error: Create Database before operation!" , "Error Info");
-                return;
-            }
+            
             if (DBconn == null)
             {
                 DBconn = new SQLiteConnection("Data Source=rec.db;Version=3;Compress=True;");
                 DBconn.Open();
+                if (!File.Exists(fileName))
+                {
+                    InitDB();
+                }
             }
 
         }
@@ -61,7 +61,7 @@ namespace BMgr
         {
             if (DBconn == null)
             {
-                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                System.Windows.MessageBox.Show("Error:无连接", "Error Info");
                 return null;
             }
             SQLiteCommand cmd;
@@ -103,7 +103,7 @@ namespace BMgr
         {
             if (DBconn == null)
             {
-                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                System.Windows.MessageBox.Show("Error:无连接", "Error Info");
                 return false;
             }
             int pagenum = 0;
@@ -136,7 +136,7 @@ namespace BMgr
         {
             if (DBconn == null)
             {
-                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                System.Windows.MessageBox.Show("Error:无连接", "Error Info");
                 return false;
             }
             SQLiteCommand cmd;
@@ -159,7 +159,7 @@ namespace BMgr
         {
             if (DBconn == null)
             {
-                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                System.Windows.MessageBox.Show("Error:无连接", "Error Info");
                 return false;
             }
             int pagenum = 0;
@@ -194,7 +194,7 @@ namespace BMgr
         {
             if (DBconn == null)
             {
-                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                System.Windows.MessageBox.Show("Error:无连接", "Error Info");
                 return null;
             }
             SQLiteCommand cmd;
@@ -230,7 +230,7 @@ namespace BMgr
         {
             if (DBconn == null)
             {
-                System.Windows.MessageBox.Show("Error:No connection", "Error Info");
+                System.Windows.MessageBox.Show("Error:无连接", "Error Info");
                 return null;
             }
             SQLiteCommand cmd;

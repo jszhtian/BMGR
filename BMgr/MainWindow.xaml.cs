@@ -33,13 +33,13 @@ namespace BMgr
             DBClass dbo = new DBClass();
             if (dbo.InitDB() == true)
             {
-                MessageBox.Show("Operation Successfully Completed", "Info");
+                MessageBox.Show("操作完成", "Info");
             }
         }
 
         private void DBDel_Click(object sender, RoutedEventArgs e)
         {
-            var result=MessageBox.Show("Do you want to delete the DataBase?", "Warning", MessageBoxButton.YesNo);
+            var result=MessageBox.Show("是否要删除数据库?", "Warning", MessageBoxButton.YesNo);
             DBClass dbo = new DBClass();
             dbo.ForceClose();
             if (result == MessageBoxResult.Yes)
@@ -91,7 +91,7 @@ namespace BMgr
                 Tags.CopyTo(TagsArray);
                 string TagString = TagsClass.GetTagStringFromList(TagsArray);
                 DBClass dbclass = new DBClass();
-                if(dbclass.InsertRecord(NameBox.Text, AuthBox.Text, TagString, PageBox.Text, PathBox.Text)==true) MessageBox.Show("Operation Successfully Completed", "Info");
+                if(dbclass.InsertRecord(NameBox.Text, AuthBox.Text, TagString, PageBox.Text, PathBox.Text)==true) MessageBox.Show("操作完成", "Info");
                 bufdata = dbclass.QueryRecord();
                 RecList.ItemsSource = bufdata;
                 UpdateViewSource();
@@ -99,7 +99,7 @@ namespace BMgr
             }
             else
             {
-                MessageBox.Show("A record must have name and page number to storage", "Info");
+                MessageBox.Show("最少要有名字和页数才能存储", "Info");
             }
         }
 
@@ -154,7 +154,7 @@ namespace BMgr
                         bufdata.Remove(bufdata[i]);
                 }
                 UpdateViewSource();
-                if(dbclass.DeleteRecord(rowid)) MessageBox.Show("Operation Successfully Completed", "Info");
+                if(dbclass.DeleteRecord(rowid)) MessageBox.Show("操作完成", "Info");
                 
             }
         }
@@ -179,7 +179,7 @@ namespace BMgr
                 Tags.CopyTo(TagsArray);
                 string TagString = TagsClass.GetTagStringFromList(TagsArray);
                 DBClass dbclass = new DBClass();
-                if(dbclass.UpdateRecord(rowid, NameBox.Text, AuthBox.Text, TagString, PageBox.Text, PathBox.Text)) MessageBox.Show("Operation Successfully Completed", "Info");
+                if(dbclass.UpdateRecord(rowid, NameBox.Text, AuthBox.Text, TagString, PageBox.Text, PathBox.Text)) MessageBox.Show("操作完成", "Info");
                 for (int i = 0; i < bufdata.Count; i++)
                 {
                     if (bufdata[i].id == rowid)
@@ -215,7 +215,7 @@ namespace BMgr
             wnd.WindowStartupLocation= WindowStartupLocation.CenterOwner;
             wnd.ShowDialog();
             FindWindow.SearchMode result = FindWindow.result;
-            if (result== FindWindow.SearchMode.cancelFind) MessageBox.Show("CANCEL Search", "Info");
+            if (result== FindWindow.SearchMode.cancelFind) MessageBox.Show("取消搜索", "Info");
             if (result == FindWindow.SearchMode.byAuthor)
             {
                 if (!string.IsNullOrWhiteSpace(AuthBox.Text))
@@ -226,7 +226,7 @@ namespace BMgr
                 }
                 else
                 {
-                    MessageBox.Show("search condition is empty", "Info");
+                    MessageBox.Show("搜索条件为空", "Info");
                 }
                 
             }
@@ -240,7 +240,7 @@ namespace BMgr
                 }
                 else
                 {
-                    MessageBox.Show("search condition is empty", "Info");
+                    MessageBox.Show("搜索条件为空", "Info");
                 }
                 
             }
@@ -265,7 +265,7 @@ namespace BMgr
                 }
                 else
                 {
-                    MessageBox.Show("search condition is empty", "Info");
+                    MessageBox.Show("搜索条件为空", "Info");
                 }
             }
         }
@@ -278,9 +278,10 @@ namespace BMgr
                 string xmlPath = System.IO.Path.GetDirectoryName(PathBox.Text) + "\\meta.xml";
                 if (!File.Exists(xmlPath))
                 {
-                    MessageBox.Show("No meta file found", "Info");
+                    MessageBox.Show("未找到元数据", "Info");
                     return;
                 }
+                
                 string xmlString = File.ReadAllText(xmlPath, Encoding.Unicode);
                 try
                 {
@@ -295,7 +296,7 @@ namespace BMgr
                     {
                         addTagFunc(val);
                     }
-                    MessageBox.Show("Operation Successfully Completed", "Info");
+                    MessageBox.Show("操作完成", "Info");
                     if (!string.IsNullOrWhiteSpace(CoverBox.Text))
                     {
                         string imgpath = System.IO.Path.GetDirectoryName(PathBox.Text) + "\\" + CoverBox.Text;
@@ -314,7 +315,7 @@ namespace BMgr
             }
             else
             {
-                MessageBox.Show("Path is empty", "Info");
+                MessageBox.Show("路径为空", "Info");
             }
         }
 
@@ -327,6 +328,16 @@ namespace BMgr
                 MetaClass meta = new MetaClass();
                 meta.author = AuthBox.Text;
                 meta.cover = CoverBox.Text;
+                if (!string.IsNullOrWhiteSpace(CoverBox.Text))
+                {
+                    if (!File.Exists(System.IO.Path.GetDirectoryName(PathBox.Text) + "\\" + CoverBox.Text))
+                    {
+                        MessageBox.Show("未找到封面!\n只支持相对路径.", "Error");
+                        MessageBox.Show("元数据创建失败.", "Info");
+                        return;
+                    }
+                }
+                    
                 meta.name = NameBox.Text;
                 meta.page = int.Parse(PageBox.Text);
                 List<string> Tags = new List<string>();
@@ -343,11 +354,11 @@ namespace BMgr
                     File.Delete(xmlPath);
                 }
                 File.WriteAllText(xmlPath, xmlString,Encoding.Unicode);
-                MessageBox.Show("Operation Successfully Completed", "Info");
+                MessageBox.Show("操作完成", "Info");
             }
             else
             {
-                MessageBox.Show("Path is empty", "Info");
+                MessageBox.Show("路径为空", "Info");
             }
         }
     }

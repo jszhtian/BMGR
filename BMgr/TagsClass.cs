@@ -20,7 +20,11 @@ namespace BMgr
             {
                 outString += Tag + "|";
             }
-            outString = outString.Substring(0, outString.Length - 1);
+            if (outString != string.Empty)
+            {
+                outString = outString.Substring(0, outString.Length - 1);
+            }
+            
             return outString;
         }
         public static bool IsContainAllTags(string[] Target, string[] condition)
